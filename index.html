@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Notes Enhanced View - Base</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+<style>
+  :root {
+    --white: #fff;
+    --blue: #007aff;
+    --blue-dark: #0051a8;
+    --gray-dark: #232323;
+    --gray-light: #f5f5f7;
+    --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+      Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    --nav-height: 50px;
+    --border-radius: 16px;
+    --transition-speed: 0.3s;
+    --icon-size: 26px;
+  }
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0; padding: 0; height: 100%;
+    font-family: var(--font-stack);
+    background: var(--gray-light);
+    color: var(--gray-dark);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  body.dark-mode {
+    background: #121212;
+    color: var(--gray-light);
+  }
+  a {
+    color: var(--blue);
+    text-decoration: none;
+  }
+  a:hover, a:focus {
+    color: var(--blue-dark);
+    outline: none;
+  }
+  header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: var(--nav-height);
+    background: var(--white);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 16px;
+    z-index: 10;
+  }
+  body.dark-mode header {
+    background: #1c1c1e;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.7);
+  }
+  .logo-container {
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: var(--blue);
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  body.dark-mode .logo-container {
+    color: var(--gray-light);
+  }
+  main {
+    margin: calc(var(--nav-height) + 20px) 16px 90px 16px;
+    background: var(--white);
+    border-radius: var(--border-radius);
+    padding: 24px 20px 32px;
+    min-height: calc(100vh - var(--nav-height) - 170px);
+    overflow-y: auto;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  body.dark-mode main {
+    background: #222;
+    color: var(--gray-light);
+  }
+  ul.section-notes-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  ul.section-notes-list li {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    user-select: none;
+    font-weight: 600;
+    font-size: 1.25rem;
+    gap: 8px;
+    transition: background-color 0.3s;
+  }
+  ul.section-notes-list li:hover, ul.section-notes-list li:focus {
+    background-color: var(--gray-light);
+    outline: none;
+  }
+  body.dark-mode ul.section-notes-list li:hover,
+  body.dark-mode ul.section-notes-list li:focus {
+    background-color: #333;
+  }
+  .letter-box {
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    background: var(--blue);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+    border-radius: 12px;
+    user-select: none;
+  }
+  body.dark-mode .letter-box {
+    background: var(--blue-dark);
+  }
+  .numbering {
+    width: 30px;
+    flex-shrink: 0;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--blue);
+    display: flex;
+    justify-content: center;
+  }
+  body.dark-mode .numbering {
+    color: var(--blue);
+  }
+  button.fav-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--gray-medium);
+    font-size: var(--icon-size);
+    transition: color 0.3s;
+    user-select: none;
+    margin-left: auto;
+  }
+  button.fav-btn.liked {
+    color: crimson;
+    animation: heart-pop 0.3s forwards;
+  }
+  @keyframes heart-pop {
+    0% {transform: scale(1);}
+    50% {transform: scale(1.4);}
+    100% {transform: scale(1);}
+  }
+  #download-page {
+    display: none;
+    text-align: center;
+  }
+  #download-page h2 {
+    margin-bottom: 22px;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--blue-dark);
+  }
+  body.dark-mode #download-page h2 {
+    color: var(--blue);
+  }
+  #download-page p {
+    font-size: 1.1rem;
+    margin-bottom: 16px;
+    color: var(--gray-dark);
+  }
+  body.dark-mode #download-page p {
+    color: var(--gray-light);
+  }
+  #progress-bar-container {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    height: 8px;
+    background: var(--gray-medium);
+    border-radius: 4px;
+    margin: 0 auto 8px auto;
+  }
+  #progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(270deg, #3b82f6, #60a5fa);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+  }
+  #progress-text {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: 700;
+    color: var(--gray-dark);
+    user-select:none;
+    font-size: 0.9rem;
+  }
+  #download-progress-info {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--gray-medium);
+    margin-bottom: 12px;
+    min-height: 1.3em;
+  }
+  body.dark-mode #download-progress-info {
+    color: var(--gray-light);
+  }
+  #download-actions #download-btn {
+    width: 100%;
+    padding: 16px;
+    font-size: 1.25rem;
+    font-weight: 700;
+    border-radius: 30px;
+    background: var(--blue);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    user-select:none;
+  }
+  #download-actions #download-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  #download-actions #back-btn {
+    margin-top: 20px;
+    width: 100%;
+    padding: 14px;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 30px;
+    background: transparent;
+    border: 2px solid var(--gray-medium);
+    cursor: pointer;
+  }
+
+  #bottom-nav-container {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    display: flex;
+    align-items: center;
+    height: var(--nav-height);
+    background: var(--white);
+    border-top: 1px solid #ccc;
+    box-shadow: 0 -1px 4px rgba(0,0,0,0.07);
+    padding: 0 12px;
+    gap: 10px;
+    z-index: 1100;
+  }
+  body.dark-mode #bottom-nav-container {
+    background: #1c1c1e;
+    border-color: #333;
+    box-shadow: 0 -1px 6px #000a;
+  }
+
+  nav#site-nav {
+    flex-grow: 1;
+    display: flex;
+    gap: 12px;
+    background: var(--menu-bg-light);
+    border-radius: var(--border-radius);
+    padding: 8px 12px;
+    max-width: 100%;
+    height: 44px;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--blue) var(--gray-light);
+  }
+  nav#site-nav a {
+    white-space: nowrap;
+    height: 36px;
+    line-height: 36px;
+    color: var(--blue);
+    padding: 0 12px;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    user-select:none;
+    text-transform: uppercase;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  nav#site-nav a span.material-symbols-outlined {
+    font-size: var(--icon-size);
+    user-select:none;
+  }
+  nav#site-nav a.active,
+  nav#site-nav a:hover,
+  nav#site-nav a:focus {
+    background-color: var(--blue);
+    color: var(--white);
+    outline: none;
+  }
+  body.dark-mode nav#site-nav {
+    background: rgba(40, 61, 102, 0.48);
+  }
+  body.dark-mode nav#site-nav a.active,
+  body.dark-mode nav#site-nav a:hover,
+  body.dark-mode nav#site-nav a:focus {
+    background-color: var(--blue-dark);
+    color: white;
+  }
+  #bottom-icons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+  #bottom-icons button.icon-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--blue);
+    font-size: var(--icon-size);
+    padding: 6px;
+    border-radius: 8px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  body.dark-mode #bottom-icons button.icon-btn {
+    color: var(--gray-light);
+  }
+  #bottom-icons button.icon-btn:hover,
+  #bottom-icons button.icon-btn:focus {
+    background-color: rgba(0, 122, 255, 0.25);
+    color: var(--white);
+    outline: none;
+  }
+  body.dark-mode #bottom-icons button.icon-btn:hover,
+  body.dark-mode #bottom-icons button.icon-btn:focus {
+    background-color: rgba(0, 85, 179, 0.5);
+    color: var(--white);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-container" tabindex="0" role="button" aria-label="Home" title="Home">
+    <span class="material-symbols-outlined" aria-hidden="true">aodglyphsarchitecture</span>
+  </div>
+</header>
+
+<main>
+  <section id="content-page" aria-label="Notes Content"></section>
+
+  <section id="download-page" aria-live="polite" aria-atomic="true" style="display:none; text-align:center; padding: 0 20px;">
+    <h2 id="note-title"></h2>
+    <p id="note-description"></p>
+
+    <div id="progress-bar-container" aria-hidden="true">
+      <div id="progress-bar"></div>
+      <div id="progress-text" aria-live="off" aria-atomic="true">0%</div>
+    </div>
+
+    <div id="download-progress-info"></div>
+
+    <div id="download-actions">
+      <button id="download-btn" disabled>Download PDF</button>
+      <button id="back-btn">← Back to Notes</button>
+    </div>
+  </section>
+</main>
+
+<footer id="bottom-nav-container" aria-label="Bottom navigation and actions">
+  <nav id="site-nav" role="navigation" aria-label="Site Navigation">
+    <a href="#" id="nav-home" class="active" role="link" tabindex="0" aria-current="page"><span class="material-symbols-outlined">home</span><span>Home</span></a>
+    <a href="#" id="nav-notes" role="link" tabindex="0"><span class="material-symbols-outlined">note</span><span>Notes</span></a>
+    <a href="#" id="nav-download" role="link" tabindex="0"><span class="material-symbols-outlined">download</span><span>Downloaded</span></a>
+    <a href="#" id="nav-settings" role="link" tabindex="0"><span class="material-symbols-outlined">settings</span><span>Settings</span></a>
+    <a href="#" id="nav-info" role="link" tabindex="0"><span class="material-symbols-outlined">info</span><span>Info</span></a>
+  </nav>
+  <div id="bottom-icons" aria-label="Bottom action icons">
+    <button id="theme-toggle" class="icon-btn" aria-label="Toggle Theme" tabindex="0"><span class="material-symbols-outlined">light_mode</span></button>
+    <button id="user-profile-btn" class="icon-btn" aria-label="User Profile" tabindex="0"><span class="material-symbols-outlined">person</span></button>
+    <button id="favorites-btn" class="icon-btn" aria-label="Favorites" tabindex="0"><span class="material-symbols-outlined">favorite</span></button>
+  </div>
+</footer>
+
+<div id="profile-modal" role="dialog" aria-modal="true" aria-labelledby="profile-modal-title" tabindex="-1" style="display:none;">
+  <header>
+    <h2 id="profile-modal-title">User Profile</h2>
+    <button class="close-btn" aria-label="Close profile modal">&times;</button>
+  </header>
+  <div class="profile-info" id="profile-info">
+    <p>Viewing as <strong>Guest</strong></p>
+  </div>
+  <div class="login-signup">
+    <button id="btn-login">Login</button>
+    <button id="btn-signup">Sign Up</button>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  let notesDataCache = null;
+  let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+  let downloadedNotes = JSON.parse(localStorage.getItem('downloadedNotes') || '[]');
+  let recentActivity = JSON.parse(localStorage.getItem('recentActivity') || '[]');
+  let notifications = JSON.parse(localStorage.getItem('notifications') || '[]');
+  let userProfile = JSON.parse(localStorage.getItem('userProfile') || '{"loggedIn":false,"username":null}');
+  let downloadInterval = null;
+  let ongoingDownloadNote = null;
+
+  // DOM Elements (add more if needed)
+  const contentPage = document.getElementById('content-page');
+  const downloadPage = document.getElementById('download-page');
+  const noteTitleElem = document.getElementById('note-title');
+  const noteDescElem = document.getElementById('note-description');
+  const downloadBtn = document.getElementById('download-btn');
+  const backBtn = document.getElementById('back-btn');
+  const progressBarContainer = document.getElementById('progress-bar-container');
+  const progressBar = document.getElementById('progress-bar');
+  const progressText = document.getElementById('progress-text');
+  const downloadProgressInfo = document.getElementById('download-progress-info');
+  const downloadProgressBar = document.getElementById('download-progress-bar');
+  const recentActivityList = document.getElementById('recent-activity');
+  const downloadsList = document.getElementById('downloads-list');
+  const notificationsList = document.getElementById('notifications-list');
+
+  // Sidebar controls for blur-on toggle, profile and customization
+  const blurToggleBtn = document.getElementById('blur-toggle-btn');
+  const sidebarBlurOverlay = document.getElementById('sidebar-blur-overlay');
+  const sidebarContainer = document.getElementById('sidebar-container');
+  const tabProfileBtn = document.getElementById('tab-profile');
+  const tabSettingsBtn = document.getElementById('tab-settings');
+  const profileArea = document.getElementById('profile-area');
+  const customizationArea = document.getElementById('customization-area');
+  const customPrimaryColor = document.getElementById('custom-primary-color');
+  const customFontSize = document.getElementById('custom-font-size');
+  const customIconSize = document.getElementById('custom-icon-size');
+
+  // Utilities for localStorage
+  function saveFavorites() {
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+  }
+  function saveDownloadedNotes() {
+    localStorage.setItem('downloadedNotes', JSON.stringify(downloadedNotes));
+  }
+  function saveRecentActivity() {
+    localStorage.setItem('recentActivity', JSON.stringify(recentActivity));
+  }
+  function saveNotifications() {
+    localStorage.setItem('notifications', JSON.stringify(notifications));
+  }
+  function saveUserProfile() {
+    localStorage.setItem('userProfile', JSON.stringify(userProfile));
+  }
+  
+  function addRecentActivity(text){
+    const timestamp = new Date().toLocaleString();
+    recentActivity.unshift(`${timestamp} - ${text}`);
+    if(recentActivity.length > 20) recentActivity.pop();
+    saveRecentActivity();
+    updateActivityList();
+  }
+  function addNotification(text){
+    const timestamp = new Date().toLocaleString();
+    notifications.unshift(`${timestamp} - ${text}`);
+    if(notifications.length > 20) notifications.pop();
+    saveNotifications();
+    updateNotificationList();
+  }
+
+  // Update lists in info section
+  function updateActivityList(){
+    recentActivityList.innerHTML = '';
+    if(recentActivity.length===0){
+      recentActivityList.innerHTML = '<li>No recent activity.</li>';
+      return;
+    }
+    recentActivity.forEach(act=>{
+      const li = document.createElement('li');
+      li.textContent = act;
+      recentActivityList.appendChild(li);
+    });
+  }
+  function updateDownloadsList(){
+    downloadsList.innerHTML = '';
+    if(downloadedNotes.length===0){
+      downloadsList.innerHTML = '<li>No downloads yet.</li>';
+      return;
+    }
+    downloadedNotes.forEach(note=>{
+      const li = document.createElement('li');
+      li.textContent = note.title || 'Untitled';
+      downloadsList.appendChild(li);
+    });
+  }
+  function updateNotificationList(){
+    notificationsList.innerHTML = '';
+    if(notifications.length===0){
+      notificationsList.innerHTML = '<li>No notifications.</li>';
+      return;
+    }
+    notifications.forEach(note=>{
+      const li = document.createElement('li');
+      li.textContent = note;
+      notificationsList.appendChild(li);
+    });
+  }
+
+  // Sidebar open/close
+  function openSidebar(){
+    sidebarBlurOverlay.classList.add('active');
+    sidebarContainer.classList.add('active');
+    sidebarContainer.setAttribute('aria-hidden', 'false');
+    tabProfileBtn.focus();
+    showProfileTab();
+  }
+  function closeSidebar(){
+    sidebarBlurOverlay.classList.remove('active');
+    sidebarContainer.classList.remove('active');
+    sidebarContainer.setAttribute('aria-hidden', 'true');
+  }
+  blurToggleBtn.onclick = () => {
+    if(sidebarContainer.classList.contains('active')) closeSidebar();
+    else openSidebar();
+  };
+  sidebarBlurOverlay.onclick = () => closeSidebar();
+
+  // Tabs display
+  tabProfileBtn.onclick = () => {
+    showProfileTab();
+    tabProfileBtn.setAttribute('aria-selected', 'true');
+    tabSettingsBtn.setAttribute('aria-selected', 'false');
+    tabProfileBtn.classList.add('active');
+    tabSettingsBtn.classList.remove('active');
+  };
+  tabSettingsBtn.onclick = () => {
+    showSettingsTab();
+    tabSettingsBtn.setAttribute('aria-selected', 'true');
+    tabProfileBtn.setAttribute('aria-selected', 'false');
+    tabSettingsBtn.classList.add('active');
+    tabProfileBtn.classList.remove('active');
+  };
+  function showProfileTab(){
+    profileArea.style.display = '';
+    customizationArea.style.display = 'none';
+  }
+  function showSettingsTab(){
+    profileArea.style.display = 'none';
+    customizationArea.style.display = '';
+  }
+
+  // Customization settings handlers
+  function initCustomization(){
+    const primaryColor = localStorage.getItem('customPrimaryColor') || getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim() || '#007aff';
+    const fontSize = localStorage.getItem('customFontSize') || '16';
+    const iconSize = localStorage.getItem('customIconSize') || '26';
+
+    customPrimaryColor.value = primaryColor;
+    customFontSize.value = fontSize;
+    customIconSize.value = iconSize;
+
+    applyCustomization(primaryColor, fontSize, iconSize);
+
+    customPrimaryColor.oninput = e => {
+      localStorage.setItem('customPrimaryColor', e.target.value);
+      applyCustomization(e.target.value, customFontSize.value, customIconSize.value);
+    };
+    customFontSize.oninput = e => {
+      localStorage.setItem('customFontSize', e.target.value);
+      applyCustomization(customPrimaryColor.value, e.target.value, customIconSize.value);
+    };
+    customIconSize.oninput = e => {
+      localStorage.setItem('customIconSize', e.target.value);
+      applyCustomization(customPrimaryColor.value, customFontSize.value, e.target.value);
+    };
+  }
+  function applyCustomization(primaryColor, fontSize, iconSize){
+    document.documentElement.style.setProperty('--primary-color', primaryColor);
+    document.documentElement.style.setProperty('--blue', primaryColor);
+    document.documentElement.style.setProperty('--font-size-base', fontSize + 'px');
+    document.documentElement.style.setProperty('--icon-size', iconSize + 'px');
+  }
+
+  // Load preferences
+  function loadPreferences(){
+    const theme = localStorage.getItem('theme') || 'light';
+    setTheme(theme === 'dark');
+    const iconMode = localStorage.getItem('iconMode') === 'true';
+    if(iconMode) document.body.classList.add('icon-mode');
+    else document.body.classList.remove('icon-mode');
+    iconModeToggleCheckbox.checked = iconMode;
+
+    const textColor = localStorage.getItem('textColor') || getComputedStyle(document.documentElement).getPropertyValue('--gray-dark').trim();
+    textColorPicker.value = textColor;
+    document.documentElement.style.setProperty('--gray-dark', textColor);
+
+    initCustomization();
+  }
+  function setTheme(isDark){
+    if(isDark){
+      document.body.classList.add('dark-mode');
+      themeToggleBtn.innerHTML = '<span class="material-symbols-outlined">dark_mode</span>';
+      darkModeToggleCheckbox.checked = true;
+      localStorage.setItem('theme','dark');
+    } else {
+      document.body.classList.remove('dark-mode');
+      themeToggleBtn.innerHTML = '<span class="material-symbols-outlined">light_mode</span>';
+      darkModeToggleCheckbox.checked = false;
+      localStorage.setItem('theme','light');
+    }
+  }
+
+  themeToggleBtn.onclick = () => setTheme(!document.body.classList.contains('dark-mode'));
+  darkModeToggleCheckbox.onchange = e => setTheme(e.target.checked);
+
+  iconModeToggleCheckbox.onchange = e => {
+    if(e.target.checked) document.body.classList.add('icon-mode');
+    else document.body.classList.remove('icon-mode');
+    localStorage.setItem('iconMode', e.target.checked);
+  };
+
+  textColorPicker.oninput = e => {
+    document.documentElement.style.setProperty('--gray-dark', e.target.value);
+    localStorage.setItem('textColor', e.target.value);
+  };
+
+  // User profile modal
+  function updateProfileModal(){
+    if(userProfile.loggedIn){
+      profileInfo.innerHTML = `<p>Logged in as <strong>${userProfile.username}</strong></p>
+      <button id="logout-btn">Logout</button>`;
+      btnLogin.style.display = 'none';
+      btnSignup.style.display = 'none';
+      document.getElementById('logout-btn').onclick = () => {
+        userProfile = {loggedIn:false, username:null};
+        saveUserProfile();
+        updateProfileModal();
+      };
+    } else {
+      profileInfo.innerHTML = '<p>Viewing as <strong>Guest</strong></p>';
+      btnLogin.style.display = '';
+      btnSignup.style.display = '';
+    }
+  }
+
+  userProfileBtn.onclick = () => {
+    updateProfileModal();
+    // Show modal
+    const modal = document.getElementById('profile-modal');
+    modal.style.display = 'block';
+    modal.classList.add('show');
+    modal.focus();
+  };
+
+  profileCloseBtn.onclick = () => {
+    const modal = document.getElementById('profile-modal');
+    modal.classList.remove('show');
+    setTimeout(()=>modal.style.display = 'none',250);
+  };
+
+  btnLogin.onclick = () => {
+    const name = prompt('Enter username to login');
+    if(name && name.trim()){
+      userProfile = {loggedIn:true, username:name.trim()};
+      saveUserProfile();
+      updateProfileModal();
+      profileCloseBtn.click();
+    }
+  };
+
+  btnSignup.onclick = () => {
+    const name = prompt('Enter username to sign up');
+    if(name && name.trim()){
+      userProfile = {loggedIn:true, username:name.trim()};
+      saveUserProfile();
+      updateProfileModal();
+      profileCloseBtn.click();
+    }
+  };
+
+  // Navigation links
+  navHomeLink.onclick = e => {
+    e.preventDefault();
+    setActiveTopTab(navHomeLink);
+    renderSectionsList();
+  };
+  navNotesLink.onclick = e => {
+    e.preventDefault();
+    setActiveTopTab(navNotesLink);
+    if(notesDataCache && notesDataCache.sections.length>0){
+      renderNotesList(notesDataCache.sections[0]);
+    }
+  };
+  navDownloadLink.onclick = e => {
+    e.preventDefault();
+    showDownloadHistory();
+  };
+  navSettingsLink.onclick = e => {
+    e.preventDefault();
+    setActiveTopTab(navSettingsLink);
+    hideAllPages();
+    document.getElementById('settings-page').style.display = 'block';
+  };
+  navInfoLink.onclick = e => {
+    e.preventDefault();
+    setActiveTopTab(navInfoLink);
+    hideAllPages();
+    document.getElementById('info-page').style.display = 'block';
+    updateInfoPage();
+  };
+
+  // Content rendering
+
+  // Render sections list (initial page)
+  function renderSectionsList() {
+    contentPage.innerHTML = '';
+    notesDataCache.sections.forEach(section => {
+      renderNotesList(section);
+    });
+  }
+
+  // Render notes list of section
+  function renderNotesList(section) {
+    const secEl = document.createElement('section');
+    secEl.className = 'note-section';
+    const h3 = document.createElement('h3');
+    h3.textContent = section.name;
+    secEl.appendChild(h3);
+    const ul = document.createElement('ul');
+    ul.className = 'section-notes-list';
+    section.notes.forEach((note, idx) => {
+      const li = document.createElement('li');
+      li.tabIndex = 0;
+      li.role = 'button';
+
+      const numbering = createNumbering(idx + 1);
+      const letterBox = createLetterBox(note.title.slice(0, 2));
+      const a = document.createElement('a');
+      a.href = '#';
+      a.textContent = note.title;
+      a.tabIndex = -1;
+
+      const favBtn = createFavButton(note.id);
+      li.appendChild(numbering);
+      li.appendChild(letterBox);
+      li.appendChild(a);
+      li.appendChild(favBtn);
+
+      li.onclick = () => openDownloadPage(note);
+      li.onkeydown = e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          li.click();
+        }
+      };
+
+      ul.appendChild(li);
+    });
+    secEl.appendChild(ul);
+    contentPage.appendChild(secEl);
+    contentPage.style.display = '';
+  }
+
+  // Show download history page with ongoing download
+  function showDownloadHistory(){
+    contentPage.innerHTML = '';
+    const sec = document.createElement('section');
+    sec.className = 'note-section';
+    const h3 = document.createElement('h3');
+    h3.textContent = 'Downloaded Notes';
+    sec.appendChild(h3);
+    const ul = document.createElement('ul');
+    ul.className = 'section-notes-list';
+
+    if(downloadedNotes.length === 0){
+      const li = document.createElement('li');
+      li.textContent = 'No downloaded notes yet.';
+      ul.appendChild(li);
+    } else {
+      downloadedNotes.forEach((note, i) => {
+        const li = document.createElement('li');
+        li.tabIndex = 0;
+        li.role = 'button';
+        li.appendChild(createNumbering(i + 1));
+        li.appendChild(createLetterBox(note.title.slice(0, 2)));
+        const a = document.createElement('a');
+        a.href = '#';
+        a.textContent = note.title;
+        a.tabIndex = -1;
+        li.appendChild(a);
+        const favBtn = createFavButton(note.id, favorites.includes(note.id));
+        li.appendChild(favBtn);
+        li.onclick = () => openDownloadPage(note);
+        li.onkeydown = e => {
+          if(e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            li.click();
+          }
+        };
+        ul.appendChild(li);
+      });
+    }
+    sec.appendChild(ul);
+
+    if (ongoingDownloadNote) {
+      const ongoingDiv = document.createElement('div');
+      ongoingDiv.style.marginTop = '24px';
+      ongoingDiv.style.fontWeight = '600';
+      ongoingDiv.textContent = 'Ongoing Download: ' + ongoingDownloadNote.title;
+      sec.appendChild(ongoingDiv);
+    }
+
+    contentPage.appendChild(sec);
+    contentPage.style.display = '';
+    setActiveTopTab(navDownloadLink);
+  }
+
+  // Update info page lists
+  function updateInfoPage(){
+    const recentList = document.getElementById('recent-activity');
+    const downloadsListElem = document.getElementById('downloads-list');
+    const notificationsListElem = document.getElementById('notifications-list');
+    recentList.innerHTML = '';
+    downloadedNotes.forEach(note => {
+      if(!recentActivity.includes(note.title)) addRecentActivity(`Downloaded ${note.title}`);
+    });
+    if(recentActivity.length === 0){
+      recentList.innerHTML = '<li>No recent activity.</li>';
+    } else {
+      recentActivity.forEach(act=>{
+        const li = document.createElement('li');
+        li.textContent = act;
+        recentList.appendChild(li);
+      });
+    }
+    downloadsListElem.innerHTML = '';
+    if(downloadedNotes.length === 0){
+      downloadsListElem.innerHTML = '<li>No downloads yet.</li>';
+    } else {
+      downloadedNotes.forEach(note => {
+        const li = document.createElement('li');
+        li.textContent = note.title;
+        downloadsListElem.appendChild(li);
+      });
+    }
+    notificationsListElem.innerHTML = '';
+    if(notifications.length === 0){
+      notificationsListElem.innerHTML = '<li>No notifications.</li>';
+    } else {
+      notifications.forEach(val=>{
+        const li = document.createElement('li');
+        li.textContent = val;
+        notificationsListElem.appendChild(li);
+      });
+    }
+  }
+
+  // Initialization: Initially render demo data and settings
+  notesDataCache = {
+    sections: [
+      {
+        name: 'Math',
+        notes: [
+          {id:'m1', title:'Algebra Basics', description: 'Basic Algebra concepts', pdfLink:'#'},
+          {id:'m2', title:'Calculus I', description: 'Intro to Calculus', pdfLink:'#'}
+        ]
+      },
+      {
+        name: 'Science',
+        notes: [
+          {id:'s1', title:'Physics Principles', description: 'Physics basics', pdfLink:'#'}
+        ]
+      }
+    ]
+  };
+  renderSectionsList();
+  setActiveTopTab(navHomeLink);
+  updateProfileModal();
+
+});
+</script>
+
+
+</body>
+</html>
