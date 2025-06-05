@@ -1,0 +1,348 @@
+{
+  "exams": [
+    {
+      "name": "UPSC Civil Services Preliminary Exam",
+      "sections": [
+        {
+          "name": "General Studies Paper 1",
+          "notes": [
+            {
+              "title": "History",
+              "description": "Indian history from ancient to modern period.",
+              "pdfLink": "https://byjus.com/upsc/history-upsc-syllabus/",
+              "extraMaterials": [
+                {
+                  "title": "Ancient India Notes",
+                  "url": "https://byjus.com/upsc/ancient-india-notes/"
+                },
+                {
+                  "title": "Modern India Notes",
+                  "url": "https://byjus.com/upsc/modern-india-notes/"
+                }
+              ],
+              "relatedTopics": [
+                {
+                  "title": "Indian Culture",
+                  "url": "https://byjus.com/upsc/indian-culture-upsc-syllabus/"
+                }
+              ]
+            },
+            {
+              "title": "Geography",
+              "description": "Physical, social, and economic geography of India and the world.",
+              "pdfLink": "https://byjus.com/upsc/geography-upsc-syllabus/",
+              "extraMaterials": [
+                {
+                  "title": "World Geography Notes",
+                  "url": "https://byjus.com/upsc/world-geography-notes/"
+                }
+              ],
+              "relatedTopics": []
+            },
+            {
+              "title": "Polity",
+              "description": "Indian Constitution, political system, and governance.",
+              "pdfLink": "https://byjus.com/upsc/polity-upsc-syllabus/",
+              "extraMaterials": [
+                {
+                  "title": "Constitution of India Notes",
+                  "url": "https://byjus.com/upsc/constitution-notes/"
+                }
+              ],
+              "relatedTopics": []
+            },
+            {
+              "title": "Economics",
+              "description": "Basic economic concepts and Indian economy.",
+              "pdfLink": "https://byjus.com/upsc/economics-upsc-syllabus/",
+              "extraMaterials": [
+                {
+                  "title": "Indian Economy Notes",
+                  "url": "https://byjus.com/upsc/indian-economy-notes/"
+                }
+              ],
+              "relatedTopics": []
+            },
+            {
+              "title": "Environment and Ecology",
+              "description": "Environment, biodiversity and climate change.",
+              "pdfLink": "https://byjus.com/upsc/environment-and-ecology-upsc-syllabus/",
+              "extraMaterials": [],
+              "relatedTopics": []
+            }
+          ]
+        },
+        {
+          "name": "General Studies Paper 2 (CSAT)",
+          "notes": [
+            {
+              "title": "Comprehension",
+              "description": "Reading and understanding passage-based questions.",
+              "pdfLink": "https://www.clearias.com/upsc-csat-syllabus/",
+              "extraMaterials": [],
+              "relatedTopics": []
+            },
+            {
+              "title": "Logical Reasoning",
+              "description": "Basic reasoning and analytical ability.",
+              "pdfLink": "https://www.clearias.com/upsc-csat-syllabus/",
+              "extraMaterials": [],
+              "relatedTopics": []
+            },
+            {
+              "title": "Decision Making and Problem Solving",
+              "description": "Problem solving using analytical methods.",
+              "pdfLink": "https://www.clearias.com/upsc-csat-syllabus/",
+              "extraMaterials": [],
+              "relatedTopics": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "JEE Main",
+      "sections": [
+        {
+          "name": "Physics",
+          "notes": [
+            {
+              "title": "Kinematics",
+              "description": "Study of motion without considering its causes.",
+              "pdfLink": "https://jeemain.nta.nic.in/Physics.pdf",
+              "extraMaterials": [],
+              "relatedTopics": []
+            },
+            {
+              "title": "Laws of Motion",
+              "description": "Newton's laws and applications.",
+              "pdfLink": "https://jeemain.nta.nic.in/Physics.pdf",
+              "extraMaterials": [],
+              "relatedTopics": []
+            },
+            {
+              "title": "Work, Energy and Power",
+              "description": "Conservation of energy and work concepts.",
+              "pdfLink": "https://jeemain.nta.nic.in/Physics.pdf",
+              "extraMaterials": [],
+              "relatedTopics": []
+            }
+          ]
+        },
+        {
+          "name": "Chemistry",
+          "notes": [
+            {
+              "title": "Atomic Structure",
+              "description": "Structure and behavior of atoms.",
+              "pdfLink": "https://jeemain.nta.nic.in/Chemistry.pdf",
+              "extraMaterials": [],
+              "relatedTopics": []
+            },
+            {
+              "title": "Chemical Bonding and Molecular Structure",
+              "description": "Types of bonds and molecular geometry.",
+              "pdfLink": "https://jeemain.nta.nic.in/Chemistry.pdf",
+              "extraMaterials": [],
+              "relatedTopics": []
+            }
+          ]
+        },
+        {
+          "name": "Mathematics",
+          "notes": [
+            {
+              "title": "Sets, Relations and Functions",
+              "description": "Basics of sets, relations and functions.",
+              "pdfLink": "https://jeemain.nta.nic.in/Mathematics.pdf",
+              "extraMaterials": [],
+              "relatedTopics": []
+            },
+            {
+              "title": "Algebra",
+              "description": "Quadratic equations, sequences and series.",
+              "pdfLink": "https://jeemain.nta.nic.in/Mathematics.pdf",
+              "extraMaterials": [],
+              "relatedTopics": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "GRE General Test",
+      "sections": [
+        {
+          "name": "Verbal Reasoning",
+          "notes": [
+            {
+              "title": "Reading Comprehension",
+              "description": "Analyzing and answering questions about passages.",
+              "pdfLink": "https://www.ets.org/gre/revised_general/prepare/verbal_reasoning",
+              "extraMaterials": [],
+              "relatedTopics": []
+            },
+            {
+              "title": "Text Completion",
+              "description": "Filling in blanks in sentences with appropriate words.",
+              "pdfLink": "https://www.ets.org/gre/revised_general/prepare/verbal_reasoning",
+              "extraMaterials": [],
+              "relatedTopics": []
+            }
+          ]
+        },
+        {
+          "name": "Quantitative Reasoning",
+          "notes": [
+            {
+              "title": "Arithmetic",
+              "description": "Basic number properties and operations.",
+              "pdfLink": "https://www.ets.org/gre/revised_general/prepare/quantitative_reasoning",
+              "extraMaterials": [],
+              "relatedTopics": []
+            },
+            {
+              "title": "Algebra",
+              "description": "Equations, inequalities, sequences and series.",
+              "pdfLink": "https://www.ets.org/gre/revised_general/prepare/quantitative_reasoning",
+              "extraMaterials": [],
+              "relatedTopics": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "sections": [
+    {
+      "name": "Mathematics",
+      "notes": [
+        {
+          "title": "Algebra Basics",
+          "description": "Introduction to algebraic expressions and equations",
+          "pdfLink": "https://example.com/algebra-basics.pdf",
+          "extraMaterials": [
+            {
+              "title": "Algebra Practice Problems",
+              "url": "https://example.com/algebra-practice.pdf"
+            }
+          ],
+          "relatedTopics": [
+            {
+              "title": "Geometry Fundamentals",
+              "url": "https://example.com/geometry-fundamentals"
+            }
+          ]
+        },
+        {
+          "title": "Calculus Introduction",
+          "description": "Basic calculus concepts and limits",
+          "pdfLink": "https://example.com/calculus-intro.pdf",
+          "extraMaterials": [],
+          "relatedTopics": []
+        },
+        {
+          "title": "Statistics Overview",
+          "description": "Fundamentals of statistics including mean, median, and mode",
+          "pdfLink": "https://example.com/statistics-overview.pdf",
+          "extraMaterials": [
+            {
+              "title": "Statistics Practice Questions",
+              "url": "https://example.com/statistics-practice.pdf"
+            }
+          ],
+          "relatedTopics": [
+            {
+              "title": "Probability Theory",
+              "url": "https://example.com/probability-theory"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Physics",
+      "notes": [
+        {
+          "title": "Classical Mechanics",
+          "description": "Motion, forces, and energy basics",
+          "pdfLink": "https://example.com/classical-mechanics.pdf",
+          "extraMaterials": [],
+          "relatedTopics": [
+            {
+              "title": "Thermodynamics",
+              "url": "https://example.com/thermodynamics"
+            }
+          ]
+        },
+        {
+          "title": "Electromagnetism",
+          "description": "Study of electric charges, fields, and magnetic forces",
+          "pdfLink": "https://example.com/electromagnetism.pdf",
+          "extraMaterials": [
+            {
+              "title": "Electromagnetism Practice Problems",
+              "url": "https://example.com/electromagnetism-practice.pdf"
+            }
+          ],
+          "relatedTopics": []
+        }
+      ]
+    },
+    {
+      "name": "Chemistry",
+      "notes": [
+        {
+          "title": "Organic Chemistry Basics",
+          "description": "Introduction to organic compounds and reactions",
+          "pdfLink": "https://example.com/organic-chemistry-basics.pdf",
+          "extraMaterials": [],
+          "relatedTopics": []
+        },
+        {
+          "title": "Chemical Reactions",
+          "description": "Overview of different types of chemical reactions",
+          "pdfLink": "https://example.com/chemical-reactions.pdf",
+          "extraMaterials": [],
+          "relatedTopics": []
+        }
+      ]
+    },
+    {
+      "name": "Biology",
+      "notes": [
+        {
+          "title": "Cell Biology",
+          "description": "Structure and function of cells",
+          "pdfLink": "https://example.com/cell-biology.pdf",
+          "extraMaterials": [],
+          "relatedTopics": []
+        }
+      ]
+    },
+    {
+      "name": "Computer Science",
+      "notes": [
+        {
+          "title": "Data Structures",
+          "description": "Introduction to arrays, lists, trees, and graphs",
+          "pdfLink": "https://example.com/data-structures.pdf",
+          "extraMaterials": [],
+          "relatedTopics": []
+        }
+      ]
+    },
+    {
+      "name": "History",
+      "notes": [
+        {
+          "title": "Ancient Civilizations",
+          "description": "An overview of early human societies",
+          "pdfLink": "https://example.com/ancient-civilizations.pdf",
+          "extraMaterials": [],
+          "relatedTopics": []
+        }
+      ]
+    }
+  ]
+}
