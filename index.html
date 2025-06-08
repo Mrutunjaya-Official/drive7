@@ -406,7 +406,6 @@ body.dark-mode #download-progress-info {
   color: white;
 }
 
-
 /* Bottom navigation */
 #bottom-nav-container {
   position: fixed;
@@ -501,15 +500,35 @@ body.dark-mode nav#site-nav a:focus-visible {
 }
 
 #bottom-icons {
-  display: none; /* Hidden by default on mobile, toggled visible */
+  display: none; /* Hidden by default, toggled visible */
   align-items: center;
   gap: 16px;
   flex-shrink: 0;
   user-select:none;
+  position: fixed;
+  bottom: 56px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255 255 255 / 0.95);
+  backdrop-filter: saturate(180%) blur(14px);
+  border-radius: 24px;
+  padding: 10px 24px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  max-width: 320px;
+  width: auto;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  z-index: 12000;
 }
+
 #bottom-icons.show {
-  display: flex;
+  display: flex !important;
 }
+
+body.dark-mode #bottom-icons {
+  background: rgba(28 28 30 / 0.95);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.65);
+}
+
 #bottom-icons button.icon-btn {
   background: transparent;
   border: none;
@@ -521,22 +540,25 @@ body.dark-mode nav#site-nav a:focus-visible {
   transition: background-color 0.3s, color 0.3s;
   user-select: none;
 }
+
 body.dark-mode #bottom-icons button.icon-btn {
   color: var(--gray-light);
 }
+
 #bottom-icons button.icon-btn:hover,
 #bottom-icons button.icon-btn:focus-visible {
   background-color: rgba(0, 122, 255, 0.25);
   color: var(--white);
   outline: none;
 }
+
 body.dark-mode #bottom-icons button.icon-btn:hover,
 body.dark-mode #bottom-icons button.icon-btn:focus-visible {
   background-color: rgba(0, 85, 179, 0.5);
   color: var(--white);
 }
 
-/* Accessibility outlines */
+/* Accessibility */
 a:focus-visible,
 button:focus-visible {
   outline: 3px solid var(--blue);
@@ -837,6 +859,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const progressBar = document.getElementById('progress-bar');
   const progressText = document.getElementById('progress-text');
   const downloadProgressInfo = document.getElementById('download-progress-info');
+  const downloadProgressBar = document.getElementById('download-progress-bar');
 
   const navHomeLink = document.getElementById('nav-home');
   const navNotesLink = document.getElementById('nav-notes');
@@ -882,13 +905,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   function addRecentActivity(text) {
     const time = new Date().toLocaleString();
-    recentActivity.unshift(\`\${time} - \${text}\`);
+    recentActivity.unshift(`${time} - ${text}`);
     if (recentActivity.length > 20) recentActivity.pop();
     saveRecentActivity();
   }
   function addNotification(text) {
     const time = new Date().toLocaleString();
-    notifications.unshift(\`\${time} - \${text}\`);
+    notifications.unshift(`${time} - ${text}`);
     if (notifications.length > 20) notifications.pop();
     saveNotifications();
   }
@@ -913,7 +936,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const liked = favorites.includes(noteId);
     btn.setAttribute('aria-label', liked ? 'Remove from favorites' : 'Add to favorites');
     btn.title = btn.getAttribute('aria-label');
-    btn.innerHTML = \`<span class="material-symbols-outlined" aria-hidden="true">\${liked ? 'favorite' : 'favorite_border'}</span>\`;
+    btn.innerHTML = `<span class="material-symbols-outlined" aria-hidden="true">${liked ? 'favorite' : 'favorite_border'}</span>`;
     if (liked) btn.classList.add('liked');
     btn.onclick = e => {
       e.stopPropagation();
@@ -929,20 +952,19 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.setAttribute('aria-label', 'Remove from favorites');
       btn.title = 'Remove from favorites';
       btn.innerHTML = '<span class="material-symbols-outlined" aria-hidden="true">favorite</span>';
-      addRecentActivity(\`Added "\${getNoteById(noteId).title}" to favorites.\`);
+      addRecentActivity(`Added "${getNoteById(noteId).title}" to favorites.`);
     } else {
       favorites.splice(idx, 1);
       btn.classList.remove('liked');
       btn.setAttribute('aria-label', 'Add to favorites');
       btn.title = 'Add to favorites';
       btn.innerHTML = '<span class="material-symbols-outlined" aria-hidden="true">favorite_border</span>';
-      addRecentActivity(\`Removed "\${getNoteById(noteId).title}" from favorites.\`);
+      addRecentActivity(`Removed "${getNoteById(noteId).title}" from favorites.`);
     }
     saveFavorites();
   }
 
   function getNoteById(id) {
-    if (!notesDataCache || !notesDataCache.sections) return null;
     for (const section of notesDataCache.sections) {
       for (const note of section.notes) {
         if(note.id === id) return note;
@@ -976,7 +998,6 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderSectionsList() {
     hideAllPages();
     contentPage.innerHTML = '';
-    if (!notesDataCache || !notesDataCache.sections) return;
     const ul = document.createElement('ul');
     ul.className = 'section-notes-list';
     notesDataCache.sections.forEach((section, idx) => {
@@ -994,7 +1015,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setActiveTopTab(navNotesLink);
       };
       li.onkeydown = e => {
-        if (e.key ==='Enter' || e.key === ' ') {
+        if (e.key==='Enter'||e.key===' ') {
           e.preventDefault();
           li.click();
         }
@@ -1031,7 +1052,7 @@ document.addEventListener('DOMContentLoaded', () => {
       li.appendChild(favBtn);
       li.onclick = () => openDownloadPage(note);
       li.onkeydown = e => {
-        if (e.key === 'Enter' || e.key === ' ') {
+        if (e.key==='Enter'||e.key===' ') {
           e.preventDefault();
           li.click();
         }
@@ -1051,6 +1072,7 @@ document.addEventListener('DOMContentLoaded', () => {
     noteDescElem.textContent = note.description || 'Tap the button below to download the note.';
     progressBar.style.width = '0%';
     progressText.textContent = '0%';
+    downloadProgressBar.style.width = '0%';
     downloadProgressInfo.textContent = '';
     downloadBtn.disabled = !note.pdfLink || note.pdfLink === '#';
     if(downloadBtn._listener) downloadBtn.removeEventListener('click', downloadBtn._listener);
@@ -1070,7 +1092,7 @@ document.addEventListener('DOMContentLoaded', () => {
     downloadProgressInfo.textContent = 'Starting download...';
     progressBarContainer.style.display = 'block';
     ongoingDownloadNote = note;
-    addRecentActivity(\`Started downloading: \${note.title}\`);
+    addRecentActivity(`Started downloading: ${note.title}`);
 
     downloadInterval = setInterval(() => {
       const now = performance.now();
@@ -1082,17 +1104,18 @@ document.addEventListener('DOMContentLoaded', () => {
       const percent = (downloaded / totalSize) * 100;
       progressBar.style.width = percent + '%';
       progressText.textContent = Math.floor(percent) + '%';
+      downloadProgressBar.style.width = percent + '%';
 
       const speedKB = (downloaded / elapsed / 1024).toFixed(1);
       const remTime = (totalSize - downloaded) / (downloaded / elapsed);
       const mins = Math.floor(remTime / 60);
       const secs = Math.floor(remTime % 60);
-      downloadProgressInfo.textContent = \`Speed: \${speedKB} KB/s | Time Left: \${mins > 0 ? mins + 'm ' : ''}\${secs}s\`;
+      downloadProgressInfo.textContent = `Speed: ${speedKB} KB/s | Time Left: ${mins > 0 ? mins + 'm ' : ''}${secs}s`;
 
       if (percent >= 100) {
         clearInterval(downloadInterval);
         downloadInterval = null;
-        addRecentActivity(\`Completed downloading: \${note.title}\`);
+        addRecentActivity(`Completed downloading: ${note.title}`);
         downloadedNotes.push(note);
         localStorage.setItem('downloadedNotes', JSON.stringify(downloadedNotes));
         ongoingDownloadNote = null;
@@ -1105,6 +1128,7 @@ document.addEventListener('DOMContentLoaded', () => {
           downloadBtn.textContent = 'Download PDF';
           progressBar.style.width = '0%';
           progressText.textContent = '0%';
+          downloadProgressBar.style.width = '0%';
           downloadProgressInfo.textContent = '';
         }, 1300);
       }
@@ -1137,35 +1161,33 @@ document.addEventListener('DOMContentLoaded', () => {
     ul.className = 'section-notes-list';
 
     let count = 0;
-    if (notesDataCache && notesDataCache.sections) {
-      notesDataCache.sections.forEach(sec=>{
-        sec.notes.forEach(note=>{
-          if(favorites.includes(note.id)) {
-            count++;
-            const li = document.createElement('li');
-            li.tabIndex = 0;
-            li.role = 'button';
-            li.appendChild(createNumbering(count));
-            li.appendChild(createLetterBox(note.title.slice(0,2)));
-            const a = document.createElement('a');
-            a.href = '#';
-            a.textContent = note.title;
-            a.tabIndex = -1;
-            li.appendChild(a);
-            const favBtn = createFavButton(note.id, true);
-            li.appendChild(favBtn);
-            li.onclick = () => openDownloadPage(note);
-            li.onkeydown = e => {
-              if(e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                li.click();
-              }
-            };
-            ul.appendChild(li);
-          }
-        });
+    notesDataCache.sections.forEach(sec=>{
+      sec.notes.forEach(note=>{
+        if(favorites.includes(note.id)) {
+          count++;
+          const li = document.createElement('li');
+          li.tabIndex = 0;
+          li.role = 'button';
+          li.appendChild(createNumbering(count));
+          li.appendChild(createLetterBox(note.title.slice(0,2)));
+          const a = document.createElement('a');
+          a.href = '#';
+          a.textContent = note.title;
+          a.tabIndex = -1;
+          li.appendChild(a);
+          const favBtn = createFavButton(note.id, true);
+          li.appendChild(favBtn);
+          li.onclick = () => openDownloadPage(note);
+          li.onkeydown = e => {
+            if(e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              li.click();
+            }
+          };
+          ul.appendChild(li);
+        }
       });
-    }
+    });
     if(count === 0) {
       const li = document.createElement('li');
       li.textContent = 'No favorite notes yet.';
@@ -1223,7 +1245,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if(ongoingDownloadNote) {
       const ongoing = document.createElement('div');
       ongoing.style.marginTop = '20px';
-      ongoing.innerHTML = \`<strong>Ongoing Download:</strong> \${ongoingDownloadNote.title}\`;
+      ongoing.innerHTML = `<strong>Ongoing Download:</strong> ${ongoingDownloadNote.title}`;
       section.appendChild(ongoing);
     }
 
@@ -1262,7 +1284,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Event handlers for nav
   navHomeLink.onclick = e => { e.preventDefault(); setActiveTopTab(navHomeLink); renderSectionsList(); };
-  navNotesLink.onclick = e => { e.preventDefault(); setActiveTopTab(navNotesLink); if(notesDataCache && notesDataCache.sections.length > 0) renderNotesList(notesDataCache.sections[0]); };
+  navNotesLink.onclick = e => { e.preventDefault(); setActiveTopTab(navNotesLink); if(notesDataCache.sections.length>0) renderNotesList(notesDataCache.sections[0]); };
   navDownloadLink.onclick = e => { e.preventDefault(); showDownloadHistory(); };
   navSettingsLink.onclick = e => { e.preventDefault(); setActiveTopTab(navSettingsLink); hideAllPages(); document.getElementById('settings-page').style.display = 'block'; };
   navInfoLink.onclick = e => { e.preventDefault(); setActiveTopTab(navInfoLink); hideAllPages(); document.getElementById('info-page').style.display = 'block'; updateInfoPage(); };
@@ -1306,7 +1328,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
   profileCloseBtn.onclick = () => {
     profileModal.classList.remove('show');
-    setTimeout(() => { profileModal.style.display = 'none'; }, 300);
+    setTimeout(() => { profileModal.style.display = 'none'; }, 250);
   };
   btnLogin.onclick = () => {
     const u = prompt('Enter username to login:');
@@ -1314,7 +1336,7 @@ document.addEventListener('DOMContentLoaded', () => {
       userProfile = {loggedIn:true, username:u.trim()};
       localStorage.setItem('userProfile', JSON.stringify(userProfile));
       updateProfileModal();
-      setTimeout(() => { profileModal.classList.remove('show'); profileModal.style.display = 'none'; }, 300);
+      setTimeout(() => { profileModal.classList.remove('show'); profileModal.style.display = 'none'; }, 250);
     }
   };
   btnSignup.onclick = () => {
@@ -1323,18 +1345,15 @@ document.addEventListener('DOMContentLoaded', () => {
       userProfile = {loggedIn:true, username:u.trim()};
       localStorage.setItem('userProfile', JSON.stringify(userProfile));
       updateProfileModal();
-      setTimeout(() => { profileModal.classList.remove('show'); profileModal.style.display = 'none'; }, 300);
+      setTimeout(() => { profileModal.classList.remove('show'); profileModal.style.display = 'none'; }, 250);
     }
   };
   function updateProfileModal(){
     if(userProfile.loggedIn){
-      profileInfo.innerHTML = \`
-        <p>Logged in as <strong>\${userProfile.username}</strong></p>
-        <button id="logout-btn" aria-label="Logout" style="margin-top:12px; padding: 10px 20px; border-radius: 30px; background: var(--blue); color: white; border:none; font-weight: 700; cursor:pointer; font-size:1rem;">Logout</button>\`;
+      profileInfo.innerHTML = `<p>Logged in as <strong>${userProfile.username}</strong></p><button id="logout-btn">Logout</button>`;
       btnLogin.style.display = 'none';
       btnSignup.style.display = 'none';
-      const logoutBtn = document.getElementById('logout-btn');
-      logoutBtn.onclick = () => {
+      document.getElementById('logout-btn').onclick = () => {
         userProfile = {loggedIn:false, username:null};
         localStorage.setItem('userProfile', JSON.stringify(userProfile));
         updateProfileModal();
@@ -1364,17 +1383,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Toggle bottom icons menu visibility on mobile robustly
-  const menuToggleBtn = document.getElementById('menu-toggle-btn');
-  const bottomIconsContainer = document.getElementById('bottom-icons');
-
-  menuToggleBtn.addEventListener('click', () => {
-    const isShown = bottomIconsContainer.classList.toggle('show');
-    bottomIconsContainer.setAttribute('aria-hidden', isShown ? 'false' : 'true');
-    menuToggleBtn.setAttribute('aria-expanded', isShown ? 'true' : 'false');
-  });
-
-  // Initial render and preferences loading
+  // Initial render
   (async () => {
     try {
       const resp = await fetch('notes.json');
@@ -1385,7 +1394,7 @@ document.addEventListener('DOMContentLoaded', () => {
       loadPreferences();
       updateProfileModal();
     } catch(e) {
-      contentPage.innerHTML = \`<p style="color:red;">Failed to load notes.json: \${e.message}</p>\`;
+      contentPage.innerHTML = `<p style="color:red;">Failed to load notes.json: ${e.message}</p>`;
     }
   })();
 
