@@ -18,30 +18,34 @@
     Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   --nav-height: 50px;
   --transition-speed: 0.3s;
-  --border-radius: 16px;
+  --border-radius: 0.75rem;
   --menu-bg-light: #e6f0ff;
   --menu-bg-dark: #003366;
 }
 
+/* Base reset & layout */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
-html,
-body {
+
+html, body {
   margin: 0;
   padding: 0;
-  height: 100%;
+  min-height: 100%;
   font-family: var(--font-stack);
-  background: var(--gray-light);
+  background: var(--white);
   color: var(--gray-dark);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   transition: background-color 0.3s, color 0.3s;
   user-select: none;
+  line-height: 1.6;
+  font-size: 17px;
 }
+
 body.dark-mode {
   background: #121212;
   color: var(--gray-light);
@@ -54,65 +58,77 @@ a {
   transition: color var(--transition-speed);
   user-select: none;
 }
+
 a:hover,
-a:focus {
+a:focus-visible {
   color: var(--blue-dark);
   outline: none;
 }
 
+/* Header */
 header {
-  position: fixed;
+  position: sticky;
   top: 0;
   left: 0;
   right: 0;
   height: var(--nav-height);
   background: var(--white);
-  box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+  box-shadow: 0 2px 10px rgb(0 0 0 / 0.05);
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 0 16px;
-  z-index: 1010;
+  justify-content: flex-start;
+  padding: 0 32px;
+  z-index: 10100;
   user-select: none;
   transition: background-color 0.3s, color 0.3s;
+  border-bottom: 1px solid #e5e7eb;
 }
+
 body.dark-mode header {
   background: #1c1c1e;
-  box-shadow: 0 2px 6px #000a;
+  box-shadow: 0 2px 10px #000a;
+  border-bottom-color: #444;
 }
+
 .logo-container {
   display: flex;
   align-items: center;
   color: var(--blue);
   font-weight: 700;
-  font-size: 1.6rem;
-  gap: 8px;
+  font-size: 1.875rem;
+  gap: 12px;
   cursor: pointer;
   user-select: none;
   transition: color 0.3s;
 }
+
 body.dark-mode .logo-container {
   color: var(--gray-light);
 }
+
 .logo-container .material-symbols-outlined {
-  font-size: 30px;
+  font-size: 36px;
 }
+
 .logo-container:hover,
-.logo-container:focus {
+.logo-container:focus-visible {
   color: var(--blue-dark);
   outline: none;
 }
 
+/* Main content */
 main {
-  margin: calc(var(--nav-height) + 20px) 16px 90px 16px;
+  max-width: 1200px;
+  margin: 88px auto 120px;
   background: var(--white);
   border-radius: var(--border-radius);
-  padding: 24px 20px 32px;
-  min-height: calc(100vh - calc(var(--nav-height) + 170px));
-  overflow-y: auto;
+  padding: 32px 40px 48px;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.05);
   user-select: text;
+  color: var(--gray-dark);
   transition: background-color 0.3s, color 0.3s;
 }
+
 body.dark-mode main {
   background: #222;
   color: var(--gray-light);
@@ -120,52 +136,66 @@ body.dark-mode main {
 
 /* Notes section */
 .note-section {
-  margin-bottom: 40px;
+  margin-bottom: 56px;
 }
+
 .note-section h3 {
-  margin-bottom: 16px;
+  margin-bottom: 24px;
   font-weight: 700;
-  font-size: 1.8rem;
+  font-size: 2.5rem;
   color: var(--blue-dark);
-  border-bottom: 3px solid var(--blue);
-  padding-bottom: 6px;
   user-select: none;
 }
+
 body.dark-mode .note-section h3 {
   color: var(--blue);
-  border-color: rgba(0, 85, 179, 0.9);
 }
+
 .section-notes-list {
   list-style: none;
   padding: 0;
   margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+  gap: 20px;
 }
+
 .section-notes-list li {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 12px 16px;
+  gap: 16px;
+  padding: 18px 24px;
   border-radius: var(--border-radius);
   font-weight: 600;
   font-size: 1.25rem;
   color: var(--gray-dark);
   cursor: pointer;
-  transition: background-color 0.3s;
+  background: #f9fafb;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 0.04);
+  transition: background-color 0.3s, box-shadow 0.3s;
   user-select: none;
   position: relative;
 }
+
 body.dark-mode .section-notes-list li {
   color: var(--gray-light);
+  background: #2a2a2a;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.3);
 }
+
 .section-notes-list li:hover,
 .section-notes-list li:focus-within {
   background: var(--menu-bg-light);
+  box-shadow: 0 6px 20px rgb(0 0 0 / 0.1);
   outline: none;
 }
+
 body.dark-mode .section-notes-list li:hover,
 body.dark-mode .section-notes-list li:focus-within {
   background: #333;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.5);
 }
+
 .section-notes-list li a {
   color: inherit;
   outline: none;
@@ -181,17 +211,19 @@ body.dark-mode .section-notes-list li:focus-within {
   border: none;
   cursor: pointer;
   color: var(--gray-medium);
-  font-size: 22px;
+  font-size: 24px;
   margin-left: auto;
   user-select: none;
   transition: color 0.3s;
   display: flex;
   align-items: center;
 }
+
 .fav-btn.liked {
   color: crimson;
   animation: heart-pop 0.4s ease forwards;
 }
+
 @keyframes heart-pop {
   0% {
     transform: scale(1);
@@ -209,27 +241,32 @@ body.dark-mode .section-notes-list li:focus-within {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 42px;
-  height: 42px;
+  width: 46px;
+  height: 46px;
   background: var(--blue);
-  border-radius: 12px;
+  border-radius: 14px;
   color: var(--white);
   font-weight: 700;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   user-select: none;
+  box-shadow: 0 2px 8px rgb(0 122 255 / 0.4);
 }
+
 body.dark-mode .letter-box {
   background: var(--blue-dark);
+  box-shadow: 0 2px 8px rgba(0, 85, 179, 0.6);
 }
+
 .numbering {
   font-weight: 700;
-  font-size: 1.1rem;
-  width: 30px;
+  font-size: 1.2rem;
+  width: 34px;
   display: flex;
   justify-content: center;
   user-select: none;
   color: var(--blue);
 }
+
 body.dark-mode .numbering {
   color: var(--blue);
 }
@@ -239,42 +276,56 @@ body.dark-mode .numbering {
   display: none;
   text-align: center;
   user-select:none;
+  max-width: 480px;
+  margin: 0 auto;
 }
+
 #download-page h2 {
-  font-size: 2rem;
+  font-size: 2.75rem;
   font-weight: 800;
   color: var(--blue-dark);
-  margin-bottom: 22px;
+  margin-bottom: 24px;
   user-select:none;
+  letter-spacing: -0.02em;
 }
+
 body.dark-mode #download-page h2 {
   color: var(--blue);
 }
+
 #download-page p {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   color: var(--gray-dark);
-  margin-bottom: 16px;
+  margin-bottom: 24px;
   user-select:none;
 }
+
 body.dark-mode #download-page p {
   color: var(--gray-light);
 }
+
+/* Unique improved progress bar container */
 #progress-bar-container {
   position: relative;
-  height: 6px;
+  height: 14px;
   width: 100%;
-  background: var(--gray-medium);
-  border-radius: 6px;
-  margin: 0 auto 8px auto;
+  background: linear-gradient(135deg, #e0e7ff 0%, #f0f4ff 100%);
+  border-radius: 28px;
+  margin: 0 auto 16px auto;
   max-width: 400px;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.1);
+  overflow: hidden;
 }
+
 #progress-bar {
-  background: var(--blue);
-  height: 6px;
+  background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%);
+  height: 100%;
   width: 0%;
-  border-radius: 6px;
-  transition: width 0.3s ease;
+  border-radius: 28px 0 0 28px;
+  box-shadow: 0 0 8px #3b82f6;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 #progress-text {
   position: absolute;
   right: 14px;
@@ -283,150 +334,241 @@ body.dark-mode #download-page p {
   font-weight: 700;
   color: var(--gray-dark);
   user-select:none;
-  font-size: 0.9rem;
-}
-#download-progress-info {
-  margin-bottom: 8px;
-  font-weight: 600;
   font-size: 1rem;
-  color: var(--gray-medium);
-  min-height: 1.3em;
+  text-shadow: 0 0 3px #f0f4ff;
+  pointer-events: none;
 }
+
+body.dark-mode #progress-text {
+  color: var(--gray-light);
+}
+
+/* Info text below progress bar */
+#download-progress-info {
+  margin-bottom: 20px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--gray-medium);
+  min-height: 1.4em;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  user-select:none;
+}
+
 body.dark-mode #download-progress-info {
   color: var(--gray-light);
 }
+
+/* Download actions */
+#download-actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 10px;
+}
+
+#download-btn,
+#back-btn {
+  background: var(--blue);
+  color: white;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  user-select: none;
+  box-shadow: 0 3px 12px rgb(59 130 246 / 0.5);
+  min-width: 140px;
+}
+
+#download-btn:disabled {
+  background: var(--gray-medium);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+#download-btn:hover:not(:disabled),
+#back-btn:hover {
+  background: var(--blue-dark);
+  box-shadow: 0 5px 20px rgb(37 99 235 / 0.6);
+}
+
+#back-btn {
+  background: transparent;
+  color: var(--blue);
+  box-shadow: none;
+  border: 2px solid var(--blue);
+}
+
+#back-btn:hover {
+  background: var(--blue);
+  color: white;
+}
+
 
 /* Bottom navigation */
 #bottom-nav-container {
   position: fixed;
   bottom: 0;
-  left: 0;
-  right: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 1200px;
+  width: 100%;
   background: var(--white);
-  border-top: 1px solid #ccc;
-  box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.07);
+  border-top: 1px solid #e5e7eb;
+  box-shadow: 0 -1px 10px rgb(0 0 0 / 0.05);
   display: flex;
   align-items: center;
   height: var(--nav-height);
-  padding: 0 12px;
-  gap: 10px;
+  padding: 0 24px;
+  gap: 14px;
   user-select:none;
-  z-index: 1100;
+  justify-content: space-between;
+  border-radius: 12px 12px 0 0;
+  z-index: 11000;
 }
+
 body.dark-mode #bottom-nav-container {
   background: #1c1c1e;
-  border-color: #333;
-  box-shadow: 0 -1px 6px #000a;
+  border-color: #444;
+  box-shadow: 0 -1px 12px #000a;
 }
+
 nav#site-nav {
-  background: var(--menu-bg-light);
-  border-radius: var(--border-radius);
-  padding: 8px 12px;
+  background: transparent;
+  padding: 0;
   display: flex;
-  gap: 12px;
+  gap: 20px;
   max-width: 100%;
-  height: 44px;
-  flex-shrink: 1;
+  height: auto;
+  flex-shrink: 0;
   flex-grow: 1;
-  overflow-x: auto;
-  scrollbar-width: thin;
-  scrollbar-color: var(--blue) var(--gray-light);
+  overflow-x: visible;
+  scrollbar-width: none;
+  scrollbar-color: transparent transparent;
 }
+
+nav#site-nav::-webkit-scrollbar {
+  display: none;
+}
+
 nav#site-nav a {
   color: var(--blue);
-  font-size: 1.1rem;
-  line-height: 36px;
-  height: 36px;
+  font-size: 1.125rem;
+  line-height: 1.4;
+  height: auto;
   white-space: nowrap;
-  padding: 0 12px;
+  padding: 8px 18px;
   border-radius: var(--border-radius);
   display: flex;
   align-items: center;
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
-  gap: 4px;
-  transition: background-color 0.3s, color 0.3s;
+  gap: 6px;
+  border: 2px solid transparent;
+  transition:
+    background-color 0.3s,
+    color 0.3s,
+    border-color 0.3s;
+  user-select: none;
 }
+
 nav#site-nav a span.material-symbols-outlined {
-  font-size: 22px;
+  font-size: 24px;
+  user-select:none;
+  color: var(--blue);
 }
+
 nav#site-nav a.active,
 nav#site-nav a:hover,
-nav#site-nav a:focus {
+nav#site-nav a:focus-visible {
   background-color: var(--blue);
   color: var(--white);
+  border-color: var(--blue-dark);
   outline: none;
+  user-select: none;
 }
+
 body.dark-mode nav#site-nav a.active,
 body.dark-mode nav#site-nav a:hover,
-body.dark-mode nav#site-nav a:focus {
+body.dark-mode nav#site-nav a:focus-visible {
   background-color: var(--blue-dark);
+  border-color: var(--blue);
   color: white;
+  user-select: none;
 }
+
 #bottom-icons {
-  display: flex;
+  display: none; /* Hidden by default on mobile, toggled visible */
   align-items: center;
-  gap: 12px;
+  gap: 16px;
   flex-shrink: 0;
+  user-select:none;
+}
+#bottom-icons.show {
+  display: flex;
 }
 #bottom-icons button.icon-btn {
   background: transparent;
   border: none;
   cursor: pointer;
   color: var(--blue);
-  font-size: 26px;
-  padding: 6px;
-  border-radius: 10px;
+  font-size: 28px;
+  padding: 10px;
+  border-radius: 14px;
   transition: background-color 0.3s, color 0.3s;
+  user-select: none;
 }
 body.dark-mode #bottom-icons button.icon-btn {
   color: var(--gray-light);
 }
 #bottom-icons button.icon-btn:hover,
-#bottom-icons button.icon-btn:focus {
+#bottom-icons button.icon-btn:focus-visible {
   background-color: rgba(0, 122, 255, 0.25);
   color: var(--white);
   outline: none;
 }
 body.dark-mode #bottom-icons button.icon-btn:hover,
-body.dark-mode #bottom-icons button.icon-btn:focus {
+body.dark-mode #bottom-icons button.icon-btn:focus-visible {
   background-color: rgba(0, 85, 179, 0.5);
   color: var(--white);
 }
-/* Icon mode */
-body.icon-mode nav#site-nav a > span:last-child {
-  display: none !important;
-}
-body.icon-mode nav#site-nav a {
-  font-size: 0 !important;
-  padding: 0 8px !important;
-  justify-content: center;
-}
-/* Accessibility */
+
+/* Accessibility outlines */
 a:focus-visible,
 button:focus-visible {
-  outline: 2px solid var(--blue);
-  outline-offset: 4px;
+  outline: 3px solid var(--blue);
+  outline-offset: 3px;
 }
+
 /* Responsive */
 @media (max-width:720px) {
   main {
-    margin: calc(var(--nav-height) + 20px) 12px 140px;
+    margin: calc(var(--nav-height) + 20px) 12px 160px;
+    padding: 24px 20px 40px;
+    max-width: 90%;
   }
   #bottom-nav-container {
-    padding: 0 12px;
-    gap:6px;
+    padding: 0 16px;
+    gap: 8px;
+    height: var(--nav-height);
     justify-content: space-between;
-    flex-wrap: nowrap;
+    border-radius: 0;
+    max-width: 100%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transform: none;
   }
   nav#site-nav {
-    padding: 6px 8px;
+    padding: 0;
     height: 40px;
     margin-bottom: 0;
     justify-content: center;
     gap: 8px;
-    max-width: calc(100% - 100px);
+    max-width: 100%;
   }
   nav#site-nav a {
     font-size: 0;
@@ -435,64 +577,35 @@ button:focus-visible {
     white-space: nowrap;
   }
   nav#site-nav a span.material-symbols-outlined {
-    font-size: 24px;
+    font-size: 28px;
     user-select:none;
   }
   nav#site-nav a > span:last-child {
     display: none;
   }
-  #bottom-icons {
-    position: fixed !important;
-    bottom: 56px;
-    right: 12px;
-    background: rgba(255 255 255 / 0.85);
-    backdrop-filter: blur(10px);
-    border-radius: 16px;
-    padding: 8px 12px;
-    gap: 12px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-    z-index: 1200;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-    user-select:none;
-    display: flex !important;
-    flex-wrap: nowrap;
-  }
-  body.dark-mode #bottom-icons {
-    background: rgba(28 28 30 / 0.85);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.6);
-  }
-  #bottom-icons.show {
-    display: flex;
-  }
-  #bottom-icons button.icon-btn {
-    font-size: 24px;
-    padding: 6px;
-  }
-  #icons-toggle-btn {
-    display: none; /* Hide old icon toggle */
-  }
-  /* New toggle button for menu */
   #menu-toggle-btn {
     display: block;
     background: transparent;
     border: none;
     cursor: pointer;
     color: var(--blue);
-    font-size: 32px;
-    padding: 6px 8px;
-    border-radius: 14px;
+    font-size: 36px;
+    padding: 8px 10px 6px 10px;
+    border-radius: 16px;
     user-select: none;
     transition: background-color 0.3s, color 0.3s;
     flex-shrink: 0;
     align-self: center;
-    z-index: 1210;
+    z-index: 12100;
   }
 }
+
 @media (min-width: 721px) {
   #menu-toggle-btn {
     display: none;
   }
 }
+
 /* Profile modal */
 #profile-modal {
   position: fixed;
@@ -500,19 +613,20 @@ button:focus-visible {
   left: 50%;
   transform: translate(-50%, -50%) scale(0);
   background: var(--white);
-  border-radius: var(--border-radius);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
-  width: 90%;
-  max-width: 380px;
-  z-index: 1300;
-  padding: 20px;
-  transition: transform 0.25s ease;
+  border-radius: 20px;
+  box-shadow: 0 12px 36px rgba(0,0,0,0.25);
+  width: 360px;
+  max-width: 90vw;
+  z-index: 13000;
+  padding: 28px 28px 32px 28px;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   user-select:none;
   display: none;
 }
 body.dark-mode #profile-modal {
-  background: #222;
+  background: #272727;
   color: var(--gray-light);
+  box-shadow: 0 14px 48px rgba(0,0,0,0.8);
 }
 #profile-modal.show {
   display: block;
@@ -522,46 +636,68 @@ body.dark-mode #profile-modal {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 #profile-modal header h2 {
   margin: 0;
+  font-weight: 800;
+  font-size: 1.8rem;
+  color: var(--blue-dark);
+}
+body.dark-mode #profile-modal header h2 {
+  color: var(--blue);
 }
 #profile-modal button.close-btn {
   background: transparent;
   border: none;
-  font-size: 28px;
+  font-size: 32px;
   line-height: 1;
   cursor: pointer;
   color: var(--blue);
+  transition: color 0.3s;
 }
 #profile-modal button.close-btn:hover,
-#profile-modal button.close-btn:focus {
+#profile-modal button.close-btn:focus-visible {
   color: var(--blue-dark);
   outline: none;
 }
 #profile-modal .profile-info {
-  margin-bottom: 16px;
+  margin-bottom: 24px;
+  font-size: 1.1rem;
+  color: #4b5563;
+}
+body.dark-mode #profile-modal .profile-info {
+  color: var(--gray-light);
 }
 #profile-modal .login-signup {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 14px;
 }
 #profile-modal .login-signup button {
   background: var(--blue);
   color: white;
   border: none;
-  border-radius: 20px;
-  padding: 10px 16px;
-  font-size: 1rem;
+  border-radius: 28px;
+  padding: 14px 18px;
+  font-size: 1.1rem;
+  font-weight: 700;
   cursor: pointer;
   transition: background-color 0.3s;
+  box-shadow: 0 3px 16px rgba(59 130 246 / 0.5);
 }
 #profile-modal .login-signup button:hover,
-#profile-modal .login-signup button:focus {
+#profile-modal .login-signup button:focus-visible {
   background: var(--blue-dark);
   outline: none;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
 }
 </style>
 </head>
@@ -583,50 +719,49 @@ body.dark-mode #profile-modal {
       <div id="progress-bar"></div>
       <div id="progress-text" aria-live="off" aria-atomic="true">0%</div>
     </div>
-    <div id="download-progress-info" style="margin-bottom: 8px;"></div>
-    <div id="download-progress-bar"></div>
+    <div id="download-progress-info" style="margin-bottom: 12px;"></div>
 
     <div id="download-actions">
       <button id="download-btn" disabled>Download PDF</button>
-      <button id="back-btn">← Back to Notes</button>
+      <button id="back-btn" aria-label="Back to Notes">← Back to Notes</button>
     </div>
   </section>
 
-  <section id="settings-page" role="region" aria-label="Settings Page" style="display:none;">
+  <section id="settings-page" role="region" aria-label="Settings Page" style="display:none; max-width: 480px; margin: 0 auto; padding: 20px;">
     <h2>Settings</h2>
-    <div class="setting-option">
-      <label for="dark-mode-toggle">
+    <div class="setting-option" style="margin-bottom: 20px;">
+      <label for="dark-mode-toggle" style="font-weight: 600; cursor: pointer;">
         <input type="checkbox" id="dark-mode-toggle" />
         Enable Dark Mode
       </label>
     </div>
-    <div class="setting-option">
-      <label for="icon-mode-toggle">
+    <div class="setting-option" style="margin-bottom: 20px;">
+      <label for="icon-mode-toggle" style="font-weight: 600; cursor: pointer;">
         <input type="checkbox" id="icon-mode-toggle" />
         Icon Mode (Icons Only in Navigation)
       </label>
     </div>
-    <div class="setting-option">
-      <label for="text-color-picker">
+    <div class="setting-option" style="margin-bottom: 20px;">
+      <label for="text-color-picker" style="font-weight: 600; cursor: pointer;">
         Change Text Color
-        <input type="color" id="text-color-picker" value="#232323" />
+        <input type="color" id="text-color-picker" value="#232323" style="margin-left: 10px; vertical-align: middle; cursor: pointer;" />
       </label>
     </div>
   </section>
 
-  <section id="info-page" role="region" aria-label="Information Page" style="display:none;">
+  <section id="info-page" role="region" aria-label="Information Page" style="display:none; max-width: 480px; margin: 0 auto; padding: 20px;">
     <h2>About This App</h2>
-    <div>
-      <h3>Recent Activity</h3>
-      <ul id="recent-activity"></ul>
+    <div style="margin-bottom: 24px;">
+      <h3 style="font-weight: 700; font-size: 1.5rem; margin-bottom: 8px;">Recent Activity</h3>
+      <ul id="recent-activity" style="list-style-type: disc; padding-left: 20px;"></ul>
+    </div>
+    <div style="margin-bottom: 24px;">
+      <h3 style="font-weight: 700; font-size: 1.5rem; margin-bottom: 8px;">Downloads</h3>
+      <ul id="downloads-list" style="list-style-type: disc; padding-left: 20px;"></ul>
     </div>
     <div>
-      <h3>Downloads</h3>
-      <ul id="downloads-list"></ul>
-    </div>
-    <div>
-      <h3>Notifications</h3>
-      <ul id="notifications-list"></ul>
+      <h3 style="font-weight: 700; font-size: 1.5rem; margin-bottom: 8px;">Notifications</h3>
+      <ul id="notifications-list" style="list-style-type: disc; padding-left: 20px;"></ul>
     </div>
   </section>
 </main>
@@ -649,17 +784,17 @@ body.dark-mode #profile-modal {
       <span class="material-symbols-outlined" aria-hidden="true">info</span><span>Info</span>
     </a>
   </nav>
-  <button id="menu-toggle-btn" aria-label="Toggle menu" title="Toggle menu" aria-expanded="false">
+  <button id="menu-toggle-btn" aria-label="Toggle menu" title="Toggle menu" aria-expanded="false" aria-controls="bottom-icons" aria-haspopup="true">
     <span class="material-symbols-outlined" aria-hidden="true">menu</span>
   </button>
-  <div id="bottom-icons" aria-label="Bottom action icons">
-    <button id="theme-toggle" class="icon-btn" aria-label="Toggle light/dark theme" title="Toggle theme" tabindex="0">
+  <div id="bottom-icons" aria-label="Bottom action icons" tabindex="-1" role="menu" aria-hidden="true">
+    <button id="theme-toggle" class="icon-btn" aria-label="Toggle light/dark theme" title="Toggle theme" tabindex="0" role="menuitem">
       <span class="material-symbols-outlined" aria-hidden="true">light_mode</span>
     </button>
-    <button id="user-profile-btn" class="icon-btn" aria-label="User Profile" title="User Profile" tabindex="0">
+    <button id="user-profile-btn" class="icon-btn" aria-label="User Profile" title="User Profile" tabindex="0" role="menuitem">
       <span class="material-symbols-outlined" aria-hidden="true">person</span>
     </button>
-    <button id="favorites-btn" class="icon-btn" aria-label="Favorites" title="Favorites" tabindex="0">
+    <button id="favorites-btn" class="icon-btn" aria-label="Favorites" title="Favorites" tabindex="0" role="menuitem">
       <span class="material-symbols-outlined" aria-hidden="true">favorite</span>
     </button>
   </div>
@@ -670,7 +805,7 @@ body.dark-mode #profile-modal {
     <h2 id="profile-modal-title">User Profile</h2>
     <button class="close-btn" aria-label="Close profile modal">&times;</button>
   </header>
-  <div class="profile-info" id="profile-info">
+  <div class="profile-info" id="profile-info" tabindex="0">
     <p>Viewing as <strong>Guest</strong></p>
   </div>
   <div class="login-signup">
@@ -702,7 +837,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const progressBar = document.getElementById('progress-bar');
   const progressText = document.getElementById('progress-text');
   const downloadProgressInfo = document.getElementById('download-progress-info');
-  const downloadProgressBar = document.getElementById('download-progress-bar');
 
   const navHomeLink = document.getElementById('nav-home');
   const navNotesLink = document.getElementById('nav-notes');
@@ -748,13 +882,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   function addRecentActivity(text) {
     const time = new Date().toLocaleString();
-    recentActivity.unshift(`${time} - ${text}`);
+    recentActivity.unshift(\`\${time} - \${text}\`);
     if (recentActivity.length > 20) recentActivity.pop();
     saveRecentActivity();
   }
   function addNotification(text) {
     const time = new Date().toLocaleString();
-    notifications.unshift(`${time} - ${text}`);
+    notifications.unshift(\`\${time} - \${text}\`);
     if (notifications.length > 20) notifications.pop();
     saveNotifications();
   }
@@ -779,7 +913,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const liked = favorites.includes(noteId);
     btn.setAttribute('aria-label', liked ? 'Remove from favorites' : 'Add to favorites');
     btn.title = btn.getAttribute('aria-label');
-    btn.innerHTML = `<span class="material-symbols-outlined" aria-hidden="true">${liked ? 'favorite' : 'favorite_border'}</span>`;
+    btn.innerHTML = \`<span class="material-symbols-outlined" aria-hidden="true">\${liked ? 'favorite' : 'favorite_border'}</span>\`;
     if (liked) btn.classList.add('liked');
     btn.onclick = e => {
       e.stopPropagation();
@@ -795,19 +929,20 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.setAttribute('aria-label', 'Remove from favorites');
       btn.title = 'Remove from favorites';
       btn.innerHTML = '<span class="material-symbols-outlined" aria-hidden="true">favorite</span>';
-      addRecentActivity(`Added "${getNoteById(noteId).title}" to favorites.`);
+      addRecentActivity(\`Added "\${getNoteById(noteId).title}" to favorites.\`);
     } else {
       favorites.splice(idx, 1);
       btn.classList.remove('liked');
       btn.setAttribute('aria-label', 'Add to favorites');
       btn.title = 'Add to favorites';
       btn.innerHTML = '<span class="material-symbols-outlined" aria-hidden="true">favorite_border</span>';
-      addRecentActivity(`Removed "${getNoteById(noteId).title}" from favorites.`);
+      addRecentActivity(\`Removed "\${getNoteById(noteId).title}" from favorites.\`);
     }
     saveFavorites();
   }
 
   function getNoteById(id) {
+    if (!notesDataCache || !notesDataCache.sections) return null;
     for (const section of notesDataCache.sections) {
       for (const note of section.notes) {
         if(note.id === id) return note;
@@ -841,6 +976,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderSectionsList() {
     hideAllPages();
     contentPage.innerHTML = '';
+    if (!notesDataCache || !notesDataCache.sections) return;
     const ul = document.createElement('ul');
     ul.className = 'section-notes-list';
     notesDataCache.sections.forEach((section, idx) => {
@@ -858,7 +994,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setActiveTopTab(navNotesLink);
       };
       li.onkeydown = e => {
-        if (e.key==='Enter'||e.key===' ') {
+        if (e.key ==='Enter' || e.key === ' ') {
           e.preventDefault();
           li.click();
         }
@@ -895,7 +1031,7 @@ document.addEventListener('DOMContentLoaded', () => {
       li.appendChild(favBtn);
       li.onclick = () => openDownloadPage(note);
       li.onkeydown = e => {
-        if (e.key==='Enter'||e.key===' ') {
+        if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
           li.click();
         }
@@ -915,7 +1051,6 @@ document.addEventListener('DOMContentLoaded', () => {
     noteDescElem.textContent = note.description || 'Tap the button below to download the note.';
     progressBar.style.width = '0%';
     progressText.textContent = '0%';
-    downloadProgressBar.style.width = '0%';
     downloadProgressInfo.textContent = '';
     downloadBtn.disabled = !note.pdfLink || note.pdfLink === '#';
     if(downloadBtn._listener) downloadBtn.removeEventListener('click', downloadBtn._listener);
@@ -935,7 +1070,7 @@ document.addEventListener('DOMContentLoaded', () => {
     downloadProgressInfo.textContent = 'Starting download...';
     progressBarContainer.style.display = 'block';
     ongoingDownloadNote = note;
-    addRecentActivity(`Started downloading: ${note.title}`);
+    addRecentActivity(\`Started downloading: \${note.title}\`);
 
     downloadInterval = setInterval(() => {
       const now = performance.now();
@@ -947,18 +1082,17 @@ document.addEventListener('DOMContentLoaded', () => {
       const percent = (downloaded / totalSize) * 100;
       progressBar.style.width = percent + '%';
       progressText.textContent = Math.floor(percent) + '%';
-      downloadProgressBar.style.width = percent + '%';
 
       const speedKB = (downloaded / elapsed / 1024).toFixed(1);
       const remTime = (totalSize - downloaded) / (downloaded / elapsed);
       const mins = Math.floor(remTime / 60);
       const secs = Math.floor(remTime % 60);
-      downloadProgressInfo.textContent = `Speed: ${speedKB} KB/s | Time Left: ${mins > 0 ? mins + 'm ' : ''}${secs}s`;
+      downloadProgressInfo.textContent = \`Speed: \${speedKB} KB/s | Time Left: \${mins > 0 ? mins + 'm ' : ''}\${secs}s\`;
 
       if (percent >= 100) {
         clearInterval(downloadInterval);
         downloadInterval = null;
-        addRecentActivity(`Completed downloading: ${note.title}`);
+        addRecentActivity(\`Completed downloading: \${note.title}\`);
         downloadedNotes.push(note);
         localStorage.setItem('downloadedNotes', JSON.stringify(downloadedNotes));
         ongoingDownloadNote = null;
@@ -971,7 +1105,6 @@ document.addEventListener('DOMContentLoaded', () => {
           downloadBtn.textContent = 'Download PDF';
           progressBar.style.width = '0%';
           progressText.textContent = '0%';
-          downloadProgressBar.style.width = '0%';
           downloadProgressInfo.textContent = '';
         }, 1300);
       }
@@ -1004,33 +1137,35 @@ document.addEventListener('DOMContentLoaded', () => {
     ul.className = 'section-notes-list';
 
     let count = 0;
-    notesDataCache.sections.forEach(sec=>{
-      sec.notes.forEach(note=>{
-        if(favorites.includes(note.id)) {
-          count++;
-          const li = document.createElement('li');
-          li.tabIndex = 0;
-          li.role = 'button';
-          li.appendChild(createNumbering(count));
-          li.appendChild(createLetterBox(note.title.slice(0,2)));
-          const a = document.createElement('a');
-          a.href = '#';
-          a.textContent = note.title;
-          a.tabIndex = -1;
-          li.appendChild(a);
-          const favBtn = createFavButton(note.id, true);
-          li.appendChild(favBtn);
-          li.onclick = () => openDownloadPage(note);
-          li.onkeydown = e => {
-            if(e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              li.click();
-            }
-          };
-          ul.appendChild(li);
-        }
+    if (notesDataCache && notesDataCache.sections) {
+      notesDataCache.sections.forEach(sec=>{
+        sec.notes.forEach(note=>{
+          if(favorites.includes(note.id)) {
+            count++;
+            const li = document.createElement('li');
+            li.tabIndex = 0;
+            li.role = 'button';
+            li.appendChild(createNumbering(count));
+            li.appendChild(createLetterBox(note.title.slice(0,2)));
+            const a = document.createElement('a');
+            a.href = '#';
+            a.textContent = note.title;
+            a.tabIndex = -1;
+            li.appendChild(a);
+            const favBtn = createFavButton(note.id, true);
+            li.appendChild(favBtn);
+            li.onclick = () => openDownloadPage(note);
+            li.onkeydown = e => {
+              if(e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                li.click();
+              }
+            };
+            ul.appendChild(li);
+          }
+        });
       });
-    });
+    }
     if(count === 0) {
       const li = document.createElement('li');
       li.textContent = 'No favorite notes yet.';
@@ -1088,7 +1223,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if(ongoingDownloadNote) {
       const ongoing = document.createElement('div');
       ongoing.style.marginTop = '20px';
-      ongoing.innerHTML = `<strong>Ongoing Download:</strong> ${ongoingDownloadNote.title}`;
+      ongoing.innerHTML = \`<strong>Ongoing Download:</strong> \${ongoingDownloadNote.title}\`;
       section.appendChild(ongoing);
     }
 
@@ -1127,7 +1262,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Event handlers for nav
   navHomeLink.onclick = e => { e.preventDefault(); setActiveTopTab(navHomeLink); renderSectionsList(); };
-  navNotesLink.onclick = e => { e.preventDefault(); setActiveTopTab(navNotesLink); if(notesDataCache.sections.length>0) renderNotesList(notesDataCache.sections[0]); };
+  navNotesLink.onclick = e => { e.preventDefault(); setActiveTopTab(navNotesLink); if(notesDataCache && notesDataCache.sections.length > 0) renderNotesList(notesDataCache.sections[0]); };
   navDownloadLink.onclick = e => { e.preventDefault(); showDownloadHistory(); };
   navSettingsLink.onclick = e => { e.preventDefault(); setActiveTopTab(navSettingsLink); hideAllPages(); document.getElementById('settings-page').style.display = 'block'; };
   navInfoLink.onclick = e => { e.preventDefault(); setActiveTopTab(navInfoLink); hideAllPages(); document.getElementById('info-page').style.display = 'block'; updateInfoPage(); };
@@ -1171,7 +1306,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
   profileCloseBtn.onclick = () => {
     profileModal.classList.remove('show');
-    setTimeout(() => { profileModal.style.display = 'none'; }, 250);
+    setTimeout(() => { profileModal.style.display = 'none'; }, 300);
   };
   btnLogin.onclick = () => {
     const u = prompt('Enter username to login:');
@@ -1179,7 +1314,7 @@ document.addEventListener('DOMContentLoaded', () => {
       userProfile = {loggedIn:true, username:u.trim()};
       localStorage.setItem('userProfile', JSON.stringify(userProfile));
       updateProfileModal();
-      setTimeout(() => { profileModal.classList.remove('show'); profileModal.style.display = 'none'; }, 250);
+      setTimeout(() => { profileModal.classList.remove('show'); profileModal.style.display = 'none'; }, 300);
     }
   };
   btnSignup.onclick = () => {
@@ -1188,15 +1323,18 @@ document.addEventListener('DOMContentLoaded', () => {
       userProfile = {loggedIn:true, username:u.trim()};
       localStorage.setItem('userProfile', JSON.stringify(userProfile));
       updateProfileModal();
-      setTimeout(() => { profileModal.classList.remove('show'); profileModal.style.display = 'none'; }, 250);
+      setTimeout(() => { profileModal.classList.remove('show'); profileModal.style.display = 'none'; }, 300);
     }
   };
   function updateProfileModal(){
     if(userProfile.loggedIn){
-      profileInfo.innerHTML = `<p>Logged in as <strong>${userProfile.username}</strong></p><button id="logout-btn">Logout</button>`;
+      profileInfo.innerHTML = \`
+        <p>Logged in as <strong>\${userProfile.username}</strong></p>
+        <button id="logout-btn" aria-label="Logout" style="margin-top:12px; padding: 10px 20px; border-radius: 30px; background: var(--blue); color: white; border:none; font-weight: 700; cursor:pointer; font-size:1rem;">Logout</button>\`;
       btnLogin.style.display = 'none';
       btnSignup.style.display = 'none';
-      document.getElementById('logout-btn').onclick = () => {
+      const logoutBtn = document.getElementById('logout-btn');
+      logoutBtn.onclick = () => {
         userProfile = {loggedIn:false, username:null};
         localStorage.setItem('userProfile', JSON.stringify(userProfile));
         updateProfileModal();
@@ -1226,18 +1364,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Toggle bottom icons menu visibility on mobile
+  // Toggle bottom icons menu visibility on mobile robustly
   const menuToggleBtn = document.getElementById('menu-toggle-btn');
   const bottomIconsContainer = document.getElementById('bottom-icons');
 
   menuToggleBtn.addEventListener('click', () => {
-    if (bottomIconsContainer.style.display === 'flex') {
-      bottomIconsContainer.style.display = 'none';
-      menuToggleBtn.setAttribute('aria-expanded', 'false');
-    } else {
-      bottomIconsContainer.style.display = 'flex';
-      menuToggleBtn.setAttribute('aria-expanded', 'true');
-    }
+    const isShown = bottomIconsContainer.classList.toggle('show');
+    bottomIconsContainer.setAttribute('aria-hidden', isShown ? 'false' : 'true');
+    menuToggleBtn.setAttribute('aria-expanded', isShown ? 'true' : 'false');
   });
 
   // Initial render and preferences loading
@@ -1251,7 +1385,7 @@ document.addEventListener('DOMContentLoaded', () => {
       loadPreferences();
       updateProfileModal();
     } catch(e) {
-      contentPage.innerHTML = `<p style="color:red;">Failed to load notes.json: ${e.message}</p>`;
+      contentPage.innerHTML = \`<p style="color:red;">Failed to load notes.json: \${e.message}</p>\`;
     }
   })();
 
